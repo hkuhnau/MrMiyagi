@@ -2,7 +2,11 @@ import React from "react"
 import { GetStaticProps } from "next"
 import Layout from "../components/Layout"
 import Post, { PostProps } from "../components/Post"
-import prisma from '../lib/prisma';
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
+const { PrismaClient } = require("@prisma/client");
+
+const prisma = new PrismaClient();
 
 export const getStaticProps: GetStaticProps = async () => {
   const feed = await prisma.post.findMany({
